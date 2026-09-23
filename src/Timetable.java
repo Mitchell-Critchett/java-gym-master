@@ -16,7 +16,7 @@ public class Timetable {
         //сохраняем занятие в расписании
         TreeMap<TimeOfDay, List<TrainingSession>> dayTable = timetable.getOrDefault(trainingSession.getDayOfWeek(),
                 new TreeMap<>(timeOfDayComparator));
-        List<TrainingSession> sessions = dayTable.getOrDefault(trainingSession.getTimeOfDay(), new ArrayList<TrainingSession>());
+        List<TrainingSession> sessions = dayTable.getOrDefault(trainingSession.getTimeOfDay(), new ArrayList<>());
         sessions.add(trainingSession);
         dayTable.put(trainingSession.getTimeOfDay(), sessions);
         timetable.put(trainingSession.getDayOfWeek(), dayTable);
@@ -36,7 +36,7 @@ public class Timetable {
         if (dayTable != null) return dayTable;
         System.out.println("Тренировок на этот день недели нет");
 
-        return new TreeMap<TimeOfDay, List<TrainingSession>>();
+        return new TreeMap<>();
     }
 
     public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
@@ -49,11 +49,11 @@ public class Timetable {
                 return sessions;
             }
             System.out.println("Тренировок на это время нет");
-            return new ArrayList<TrainingSession>();
+            return new ArrayList<>();
         }
 
         System.out.println("Тренировок на этот день недели нет");
-        return new ArrayList<TrainingSession>();
+        return new ArrayList<>();
     }
 
     public List<CounterOfTrainings> getCountByCoaches() {
