@@ -215,7 +215,7 @@ public class TimetableTest {
         assertEquals(1, couchSessionsList.getLast().getNumberOfTrainings());
     }
 
-    //Получение пустого списка тренеров
+    // Получение пустого списка тренеров
     @Test
     void testListSessionsFromEmptyTimetable() {
         Timetable timetable = new Timetable();
