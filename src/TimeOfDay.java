@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class TimeOfDay {
 
     //часы (от 0 до 23)
@@ -19,4 +21,15 @@ public class TimeOfDay {
     }
 
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        TimeOfDay timeOfDay = (TimeOfDay) o;
+        return hours == timeOfDay.hours && minutes == timeOfDay.minutes;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hours, minutes);
+    }
 }
