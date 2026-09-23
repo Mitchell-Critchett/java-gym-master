@@ -1,10 +1,8 @@
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class Timetable {
 
-    private HashMap<DayOfWeek, TreeMap<TimeOfDay, TrainingSession>> timetable = new HashMap<>();
+    private HashMap<DayOfWeek, TreeMap<TimeOfDay, List<TrainingSession>>> timetable = new HashMap<>();
     private Comparator<TimeOfDay> timeOfDayComparator = new Comparator<>() {
         @Override
         public int compare(TimeOfDay o1, TimeOfDay o2) {
@@ -14,25 +12,28 @@ public class Timetable {
 
     public void addNewTrainingSession(TrainingSession trainingSession) {
         //сохраняем занятие в расписании
-        TreeMap<TimeOfDay, TrainingSession> dayTable = timetable.getOrDefault(trainingSession.getDayOfWeek(), new TreeMap<>(timeOfDayComparator));
-        dayTable.put(trainingSession.getTimeOfDay(), trainingSession);
+        TreeMap<TimeOfDay, List<TrainingSession>> dayTable = timetable.getOrDefault(trainingSession.getDayOfWeek(), new TreeMap<>(timeOfDayComparator));
+        List<TrainingSession> sessions = dayTable.getOrDefault(trainingSession.getTimeOfDay(), new ArrayList<TrainingSession>());
+        sessions.add(trainingSession);
+        dayTable.put(trainingSession.getTimeOfDay(), sessions);
+        timetable.put(trainingSession.getDayOfWeek(), dayTable);
     }
 
-    public TreeMap<TimeOfDay, TrainingSession> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
+    public TreeMap<TimeOfDay, List<TrainingSession>> getTrainingSessionsForDay(DayOfWeek dayOfWeek) {
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
-        TreeMap<TimeOfDay, TrainingSession> dayTable = timetable.get(dayOfWeek);
+        TreeMap<TimeOfDay, List<TrainingSession>> dayTable = timetable.get(dayOfWeek);
         if (dayTable != null) return dayTable;
         System.out.println("Тренировок на этот день недели нет");
         return null;
     }
 
-    public TrainingSession getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
+    public List<TrainingSession> getTrainingSessionsForDayAndTime(DayOfWeek dayOfWeek, TimeOfDay timeOfDay) {
         //как реализовать, тоже непонятно, но сложность должна быть О(1)
-        TreeMap<TimeOfDay, TrainingSession> dayTable = timetable.get(dayOfWeek);
+        TreeMap<TimeOfDay,List <TrainingSession>> dayTable = timetable.get(dayOfWeek);
         if (dayTable != null) {
-            TrainingSession session = dayTable.get(timeOfDay);
-            if (session != null) {
-                return session;
+            List<TrainingSession> sessions = dayTable.get(timeOfDay);
+            if (sessions != null) {
+                return sessions;
             }
             System.out.println("Тренировок на это время нет");
             return null;
