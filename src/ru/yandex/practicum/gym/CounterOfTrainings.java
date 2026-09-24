@@ -1,3 +1,5 @@
+package ru.yandex.practicum.gym;
+
 public class CounterOfTrainings implements Comparable<CounterOfTrainings> {
 
     private Coach coach;

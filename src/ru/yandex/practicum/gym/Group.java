@@ -1,7 +1,7 @@
 package ru.yandex.practicum.gym;
 
 public class Group {
-    //название группы
+    // название группы
     private String title;
     //тип (взрослая или детская)
     private Age age;
